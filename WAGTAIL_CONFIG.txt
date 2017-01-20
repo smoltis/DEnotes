@@ -1,0 +1,45 @@
+$ pip install virtualenvwrapper
+$ export WORKON_HOME=~/Envs
+$ source virtualenvwrapper.sh
+$ mkvirtualenv wagtail --python=python3
+$ pip install wagtail gunicorn
+$ wagtail start DEnotes
+$ cd DEnotes/
+$ pip install -r requirements.txt
+$ sudo apt-get install libpq-dev 
+$ sudo apt-get install postgresql postgresql-contrib 
+$ pip install psycopg2
+$ sudo su – postgres
+$ createdb denotes
+$ psql
+postgres=# \password postgres
+postgres
+postgres=# \q
+$ exit
+$ nano ~/DEnotes/DEnotes/settings/base.py
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'denotes',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
+$ cd ~/DEnotes
+$ python manage.py migrate
+$ python manage.py createsuperuser
+stan/t****1
+$ python manage.py runserver 127.0.0.1:8800
+
+
+edit home/models.py
+edit home/templates/home/home_page.html
+
+$ workon wagtail
+$ python manage.py makemigrations
+$ python manage.py migrate
+
+

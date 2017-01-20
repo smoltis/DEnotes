@@ -1,0 +1,91 @@
+{% load static wagtailuserbar %}
+{% load wagtailcore_tags %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>
+            {% block title %}
+                {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
+            {% endblock %}
+            {% block title_suffix %}
+                {% with self.get_site.site_name as site_name %}
+                    {% if site_name %}- {{ site_name }}{% endif %}
+                {% endwith %}
+            {% endblock %}
+        </title>
+        <meta name="description" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        {# Global stylesheets #}
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/materialize.css' %}"  media="screen,projection"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/DEnotes.css' %}" media="screen,projection">
+
+        {% block extra_css %}
+            {# Override this in templates to add extra stylesheets #}
+        {% endblock %}
+   
+    </head>
+
+    <body>
+
+  <nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+      <a id="logo-container" href="#!" class="brand-logo">Logo</a>
+
+      <ul class="right hide-on-med-and-down">
+      {% for card in page.related_cards.all %}
+                <li><a href="{{ card.site_path }}"><i class="material-icons tooltipped brown-text" data-position="bottom" data-delay="50" data-tooltip="{{ card.tooltip }}">{{ card.icon }}</i></a></li>
+      {% endfor %}
+      </ul>
+
+      <ul id="nav-mobile" class="side-nav">
+      {% for card in page.related_cards.all %}
+                <li><a href="{{ card.site_path }}">{{ card.label }}</a></li>
+      {% endfor %}
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse">
+        <i class="material-icons">menu</i>
+      </a>
+    </div>
+  </nav>
+
+{% wagtailuserbar %}
+{% block content %}{% endblock %}
+  <footer class="page-footer teal">
+    <div class="container">
+      <div class="row">
+        <div class="col l12 s12">
+          <h5 class="white-text">Connect</h5>
+          <ul>
+            <li><a class="white-text" href="#!">LinkedIn</a></li>
+            <li><a class="white-text" href="#!">Twitter</a></li>
+            <li><a class="white-text" href="#!">GitHub</a></li>
+            <li><a class="white-text" href="#!">Kaggle</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="brown-text text-lighten-3" href="#">Solaris</a>
+      </div>
+    </div>
+  </footer>
+
+        {# Global javascript #}
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="{% static 'js/materialize.js' %}"></script>        
+        <script type="text/javascript" src="{% static 'js/DEnotes.js' %}"></script>
+
+        {% block extra_js %}
+            {# Override this in templates to add extra javascript #}
+        {% endblock %}
+
+    </body>
+</html>
